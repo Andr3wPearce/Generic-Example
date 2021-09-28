@@ -1,4 +1,4 @@
-public class Pair<E1, E2>{
+public class Pair<E1 extends Comparable, E2 extends Comparable> implements Comparable<Pair>{
     private E1 first;
     private E2 second;
 
@@ -34,5 +34,28 @@ public class Pair<E1, E2>{
             return eq1 && eq2;
         }
         return false;
+    }
+    public static <E extends Comparable<E>> void sort(E[] list){
+        E currentMin;
+        int currentMinIndex;
+        for(int i=0; i<list.length-1; i++){
+            currentMinIndex = i;
+            currentMin = list[i];
+            for(int j=i+1; j<list.length; j++){
+                if(currentMin.compareTo((list[j]))>0){
+                    currentMinIndex = j;
+                    currentMin=list[j];
+                }
+            }
+            if(i!=currentMinIndex){
+                list[currentMinIndex] = list[i];
+                list[i] = currentMin;
+            }
+        }
+    }
+
+    @Override
+    public int compareTo(Pair p) {
+        return this.first.compareTo(p.first)+this.second.compareTo(p.second);
     }
 }
